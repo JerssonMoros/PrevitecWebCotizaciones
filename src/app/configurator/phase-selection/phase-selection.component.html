@@ -1,0 +1,29 @@
+<div class="bg-white rounded-xl shadow-lg p-8" *ngIf="currentPhase">
+  <div class="flex items-center mb-6">
+    <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+      <i class="pi pi-cog text-blue-600 text-xl"></i>
+    </div>
+    <div>
+      <h2 class="text-2xl font-bold text-gray-800">{{ currentPhase.name }}</h2>
+      <p class="text-gray-600">Elige la opción que mejor se adapte a tu proyecto</p>
+    </div>
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-4">
+    <div class="border-2 rounded-xl p-6 cursor-pointer transition-all duration-300 hover:shadow-lg hover:border-blue-300"
+         *ngFor="let option of currentOptions"
+         [class.bg-blue-50]="isSelected(option)"
+         [class.border-blue-500]="isSelected(option)"
+         [class.shadow-lg]="isSelected(option)"
+         (click)="onOptionClick(option)">
+      <div class="flex items-start justify-between mb-3">
+        <h3 class="font-bold text-lg text-gray-800">{{ option.name }}</h3>
+        <div class="flex items-center" *ngIf="isSelected(option)">
+          <i class="pi pi-check-circle text-blue-600 text-xl"></i>
+        </div>
+      </div>
+      <p class="text-green-600 font-bold text-xl mb-2">${{ option.cost }}</p>
+      <span *ngIf="option.isOptional" class="inline-block bg-orange-100 text-orange-700 px-2 py-1 rounded-full text-xs font-medium">Opcional</span>
+    </div>
+  </div>
+</div>

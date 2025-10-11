@@ -1,0 +1,21 @@
+<!-- Breadcrumb Navigation -->
+<div class="flex items-center justify-center space-x-2 mb-6 overflow-x-auto pb-2">
+  <button *ngFor="let phase of phases; let i = index"
+          (click)="onPhaseClick(i)"
+          class="flex items-center px-3 py-2 rounded-full transition-all duration-300 whitespace-nowrap text-sm"
+          [class.bg-blue-600]="i === currentPhaseIndex"
+          [class.text-white]="i === currentPhaseIndex"
+          [class.bg-green-500]="i !== currentPhaseIndex && i < currentPhaseIndex"
+          [class.text-white]="i !== currentPhaseIndex && i < currentPhaseIndex"
+          [class.bg-gray-200]="i !== currentPhaseIndex && i > currentPhaseIndex"
+          [class.text-gray-400]="i !== currentPhaseIndex && i > currentPhaseIndex"
+          [class.cursor-pointer]="i <= currentPhaseIndex"
+          [class.cursor-not-allowed]="i > currentPhaseIndex">
+    <span class="w-5 h-5 rounded-full bg-white bg-opacity-20 flex items-center justify-center text-xs font-bold mr-2"
+          [class.bg-white]="i === currentPhaseIndex"
+          [class.text-blue-600]="i === currentPhaseIndex"
+          [class.bg-white]="i < currentPhaseIndex"
+          [class.text-green-600]="i < currentPhaseIndex">{{ i + 1 }}</span>
+    {{ phase.name }}
+  </button>
+</div>

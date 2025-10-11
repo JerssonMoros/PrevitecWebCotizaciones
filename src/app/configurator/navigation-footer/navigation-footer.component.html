@@ -1,0 +1,32 @@
+<!-- Navigation Footer -->
+<div class="mt-8 flex justify-between items-center">
+  <button (click)="onPrevious()"
+          [disabled]="currentPhaseIndex === 0"
+          class="flex items-center px-6 py-3 rounded-lg transition duration-300 disabled:bg-gray-300 disabled:cursor-not-allowed disabled:text-gray-500"
+          [class.bg-gray-200]="currentPhaseIndex === 0"
+          [class.hover:bg-gray-300]="currentPhaseIndex !== 0"
+          [class.bg-white]="currentPhaseIndex !== 0"
+          [class.hover:bg-gray-50]="currentPhaseIndex !== 0"
+          [class.border]="currentPhaseIndex !== 0"
+          [class.border-gray-300]="currentPhaseIndex !== 0">
+    <i class="pi pi-arrow-left mr-2"></i>
+    Anterior
+  </button>
+
+  <div class="flex space-x-4">
+    <button (click)="onReset()" class="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg transition duration-300 flex items-center">
+      <i class="pi pi-refresh mr-2"></i>
+      Reiniciar
+    </button>
+
+    <button (click)="onNext()"
+            [disabled]="currentPhaseIndex >= totalPhases - 1"
+            class="flex items-center px-6 py-3 rounded-lg transition duration-300 disabled:bg-gray-300 disabled:cursor-not-allowed"
+            [class.bg-gray-400]="currentPhaseIndex >= totalPhases - 1"
+            [class.hover:bg-blue-700]="currentPhaseIndex < totalPhases - 1"
+            [class.bg-blue-600]="currentPhaseIndex < totalPhases - 1">
+      Siguiente
+      <i class="pi pi-arrow-right ml-2"></i>
+    </button>
+  </div>
+</div>

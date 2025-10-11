@@ -6,11 +6,25 @@ import { ConfiguratorService } from '../services/configurator.service';
 import { Configuration } from '../models/configuration.interface';
 import { MachineOption } from '../models/machine-option.interface';
 import { Phase } from '../models/phase.interface';
+import { BreadcrumbNavigationComponent } from './breadcrumb-navigation/breadcrumb-navigation.component';
+import { PhaseSelectionComponent } from './phase-selection/phase-selection.component';
+import { SelectionSummaryComponent } from './selection-summary/selection-summary.component';
+import { NavigationFooterComponent } from './navigation-footer/navigation-footer.component';
+import { SuggestionsComponent } from './suggestions/suggestions.component';
 
 @Component({
   selector: 'app-configurator',
   standalone: true,
-  imports: [CommonModule, AsyncPipe, RouterLink],
+  imports: [
+    CommonModule,
+    AsyncPipe,
+    RouterLink,
+    BreadcrumbNavigationComponent,
+    PhaseSelectionComponent,
+    SelectionSummaryComponent,
+    NavigationFooterComponent,
+    SuggestionsComponent
+  ],
   templateUrl: './configurator.component.html'
 })
 export class ConfiguratorComponent implements OnInit {
@@ -61,6 +75,13 @@ export class ConfiguratorComponent implements OnInit {
     this.configuratorService.reset();
     this.currentPhaseIndex = 0;
     this.updateCurrentOptions();
+  }
+
+  goToPhase(phaseIndex: number): void {
+    if (phaseIndex <= this.currentPhaseIndex) {
+      this.currentPhaseIndex = phaseIndex;
+      this.updateCurrentOptions();
+    }
   }
 
   isSelected(option: MachineOption): boolean {
