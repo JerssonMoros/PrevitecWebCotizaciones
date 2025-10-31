@@ -29,7 +29,7 @@ export class ConfiguratorComponent implements OnInit {
       if (this.isSelectionComplete()) {
         this.stateService.loadMachine();
       }
-    });
+    }, { allowSignalWrites: true });
   }
 
   ngOnInit(): void {
