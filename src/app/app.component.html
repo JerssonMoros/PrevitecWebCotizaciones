@@ -1,15 +1,18 @@
 <!-- Floating Navbar -->
-<nav class="fixed top-0 left-0 right-0 z-50 bg-white text-gray-800 shadow-lg">
+<nav class="bg-white text-gray-800 shadow-lg">
   <div class="max-w-7xl mx-auto px-4">
     <div class="flex justify-between items-center py-4">
       <div class="flex items-center space-x-6">
         <img src="assets/logoPrevitec.png" alt="" width="180" class="p-2">
       </div>
       <div class="flex space-x-6">
-        <a routerLink="/" routerLinkActive="bg-gray-200" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-200 transition duration-300">Home</a>
-        <a routerLink="/configurator" routerLinkActive="bg-blue-600 text-white" class="px-4 py-2 rounded-full text-sm font-bold bg-blue-500 text-white hover:bg-blue-600 shadow-md transition duration-300">Configurator</a>
+        <a routerLink="/home" routerLinkActive="bg-gray-200" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-200 transition duration-300">Inicio</a>
+        <a routerLink="/configurator" routerLinkActive="bg-blue-600 text-white" class="px-4 py-2 rounded-md text-sm font-medium bg-blue-500 text-gray-50 hover:bg-blue-600 shadow-md transition duration-300">Diseña</a>
+        <a routerLink="/gallery" routerLinkActive="bg-blue-600 text-white" class="px-4 py-2 rounded-md text-sm font-medium bg-blue-500 text-gray-50 hover:bg-blue-600 shadow-md transition duration-300">Galeria</a>
       </div>
     </div>
   </div>
 </nav>
-<router-outlet></router-outlet>
+<div class="min-h-screen">
+  <router-outlet class="h-full"></router-outlet>
+</div>

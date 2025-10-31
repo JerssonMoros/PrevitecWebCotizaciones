@@ -1,45 +1,162 @@
-import { Phase } from '../models/phase.interface';
-
-export const MOCK_PHASES: Phase[] = [
+export const MOCK_MACHINES_CONSOLIDATED = [
   {
-    id: 'phase1',
-    name: 'Base Machine Type',
-    options: [
-      { id: 'auto', name: 'Automatic', cost: 10000, compatibleWith: [], isOptional: false },
-      { id: 'semi', name: 'Semi-Automatic', cost: 8000, compatibleWith: [], isOptional: false }
+    "id": 1,
+    "title": "LLENADORAS TAPADORAS",
+    "classification": [
+      {
+        "main_type": "SEMIAUTOMÁTICAS",
+        "functions": [
+          {
+            "function": "TAPADORAS",
+            "operation_details": [
+              {"type": "Tapa rosca"}, 
+              {"type": "Grafado ó Pílfer"}
+            ]
+          },
+          {
+            "function": "LLENADORAS",
+            "operation_details": [
+              {
+                "product_type": "Líquidos", 
+                "range": [
+                  {
+                    "system": "Multirango", 
+                    "technology": [
+                      "De engranajes", 
+                      "Peristáltica \"S\" / \"M\""
+                    ]
+                  }
+                ]
+              },
+              {
+                "product_type": "Polvos", 
+                "range": null, 
+                "technology": ["De tornillo"]
+              },
+              {"product_type": "Semisólidos (Tubos colapsables)", 
+                "range": null, 
+                "technology": [
+                  "Aluminio", 
+                  "plásticos"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "main_type": "AUTOMÁTICAS",
+        "functions": [
+          {
+            "function": "TAPADORAS",
+            "operation_details": [
+              {"type": "Lineal", "subtype": null},
+              {"type": "Rotativa intermitente", "subtype": null}
+            ]
+          },
+          {
+            "function": "LLENADORAS",
+            "operation_details": [
+              {
+                "type": "Lineales", 
+                "technology": [
+                  "De engranajes", 
+                  "Peristálticas \"S\" Y \"M\"", 
+                  "De pistón"
+                ]
+              }
+            ]
+          },
+          {
+            "function": "MONOBLOQUES",
+            "operation_details": [
+              {
+                "type": "Miniblock", 
+                "product_types": [
+                  {
+                    "type": "Líquidos", 
+                    "application": [
+                      "Orales", 
+                      "Inyectables", 
+                      "Oftálmicos"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "Monoblock Compacto", 
+                "product_types": [
+                  {
+                    "type": "Líquidos", 
+                    "application": [
+                      "Orales", 
+                      "Inyectables", 
+                      "Oftálmicos"
+                    ]   
+                  }
+                ]
+              },
+              {
+                "type": "Monoblock", 
+                "product_types": [
+                  {
+                    "type": "Polvos", 
+                    "application": [
+                      "Orales (Tornillo)",
+                      "Inyectables (Disco)"
+                    ]
+                  },
+                  {
+                    "type": "Líquidos", 
+                    "application": [
+                      "Orales", 
+                      "Inyectables", 
+                      "Oftálmicos"
+                    ]   
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
     ]
   },
   {
-    id: 'phase2',
-    name: 'Operation Type',
-    options: [
-      { id: 'mill', name: 'Milling', cost: 5000, compatibleWith: ['auto', 'semi'], isOptional: false },
-      { id: 'drill', name: 'Drilling', cost: 3000, compatibleWith: ['auto', 'semi'], isOptional: false },
-      { id: 'turn', name: 'Turning', cost: 4000, compatibleWith: ['semi'], isOptional: false } // Only semi
+    "id": 2,
+    "title": "ESTUCHADORAS",
+    "classification": [
+      {
+        "main_type": "ESTUCHADORAS VERTICALES",
+        "functions": [ // Usamos "functions" para mantener la consistencia en el código del componente
+          {
+            "function": "8 estaciones",
+            "operation_details": [
+              {"type": "Alimentación Semiautomática."},
+              {"type": "Alimentación Automática."}
+            ]
+          },
+          {
+            "function": "12 estaciones",
+            "operation_details": [
+              {"type": "Alimentación Semiautomática."},
+              {"type": "Alimentación Automática."}
+            ]
+          }
+        ]
+      }
     ]
   },
   {
-    id: 'phase3',
-    name: 'Capacity',
-    options: [
-      { id: 'single', name: 'Single-Assisted', cost: 2000, compatibleWith: ['mill', 'drill', 'turn'], isOptional: false },
-      { id: 'multi', name: 'Multi-Assisted', cost: 4000, compatibleWith: ['mill', 'drill'], isOptional: false } // Not turn
-    ]
-  },
-  {
-    id: 'phase4',
-    name: 'Add-ons',
-    options: [
-      { id: 'sensor', name: 'Advanced Sensors', cost: 1500, compatibleWith: ['single', 'multi'], isOptional: true },
-      { id: 'cool', name: 'Cooling System', cost: 1000, compatibleWith: ['single', 'multi'], isOptional: true }
-    ]
-  },
-  {
-    id: 'phase5',
-    name: 'Customizations',
-    options: [
-      { id: 'paint', name: 'Custom Paint', cost: 500, compatibleWith: ['sensor', 'cool'], isOptional: true },
-      { id: 'warranty', name: 'Extended Warranty', cost: 800, compatibleWith: ['sensor', 'cool'], isOptional: true }
+    "id": 3,
+    "title": "AUX. DE LINEA",
+    "equipment": [ // Mantenemos "equipment" para estos, son una lista simple
+      {"name": "TORNAMESAS", "type": null},
+      {"name": "BANDAS", "type": null},
+      {"name": "POSICIONADORES DE FRASCOS", "type": null},
+      {"name": "SOPLADORAS DE FRASCOS", "type": ["Lineal", "Rotativa 360°"]},
+      {"name": "LAVADORA EXTERNA DE VIALES", "type": null},
+      {"name": "TOLVAS ELECTROMAGNÉTICAS", "type": null}
     ]
   }
 ];
