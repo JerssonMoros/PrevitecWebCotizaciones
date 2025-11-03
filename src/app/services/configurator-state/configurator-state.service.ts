@@ -25,6 +25,13 @@ export class ConfiguratorStateService {
     services: new Set()
   });
 
+  // Configuración de categorías
+  categoryConfigs = signal<Map<string, { hasQuantity: boolean; hasSelectAll: boolean }>>(new Map([
+    ['aditional', { hasQuantity: true, hasSelectAll: false }],
+    ['optional', { hasQuantity: false, hasSelectAll: true }],
+    ['services', { hasQuantity: false, hasSelectAll: true }]
+  ]));
+
   // --- COMPUTED SIGNALS ---
 
   /**
@@ -99,6 +106,24 @@ export class ConfiguratorStateService {
    */
   getAditionalQuantity(optionName: string): number {
     return this.selectedOptions().aditional.get(optionName) || 0;
+  }
+
+  /**
+   * Obtiene la configuración de una categoría.
+   */
+  getCategoryConfig(category: string): { hasQuantity: boolean; hasSelectAll: boolean } {
+    return this.categoryConfigs().get(category) || { hasQuantity: false, hasSelectAll: true };
+  }
+
+  /**
+   * Establece la configuración de una categoría.
+   */
+  setCategoryConfig(category: string, config: { hasQuantity: boolean; hasSelectAll: boolean }): void {
+    this.categoryConfigs.update(configs => {
+      const newConfigs = new Map(configs);
+      newConfigs.set(category, config);
+      return newConfigs;
+    });
   }
 
   constructor(

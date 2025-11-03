@@ -39,3 +39,9 @@ export interface MachineOption {
   price_usd: number;
 }
 export type OptionCategory = 'aditional' | 'optional' | 'services';
+
+export interface CategoryConfig {
+  category: OptionCategory;
+  hasQuantity: boolean;
+  hasSelectAll: boolean;
+}

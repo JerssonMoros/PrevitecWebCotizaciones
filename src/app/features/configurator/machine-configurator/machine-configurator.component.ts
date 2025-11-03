@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ConfiguratorStateService } from '../../../services/configurator-state/configurator-state.service';
 import { PriceCalculationService } from '../../../services/price-calculation/price-calculation.service';
 import { OptionSectionComponent } from '../option-section/option-section.component';
-import { Machine, OptionCategory } from '../../../models/machine.interface';
+import { Machine, OptionCategory, CategoryConfig } from '../../../models/machine.interface';
 
 @Component({
   selector: 'app-machine-configurator',
@@ -23,6 +23,9 @@ export class MachineConfiguratorComponent {
   // Inyección de servicios
   private stateService = inject(ConfiguratorStateService);
   private priceService = inject(PriceCalculationService);
+
+  // Exposición de señales computadas del servicio
+  categoryConfigs = this.stateService.categoryConfigs;
 
   // Exposición de señales computadas del servicio
   machineResult = this.stateService.machineResult;
@@ -67,6 +70,14 @@ export class MachineConfiguratorComponent {
    */
   decrementAditional(optionName: string): void {
     this.stateService.decrementAditional(optionName);
+  }
+
+  /**
+   * Obtiene la configuración de una categoría.
+   */
+  getCategoryConfig(category: OptionCategory): CategoryConfig {
+    const config = this.categoryConfigs().get(category) || { hasQuantity: false, hasSelectAll: true };
+    return { category, ...config };
   }
 
   /**

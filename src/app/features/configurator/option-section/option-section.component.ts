@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MachineOption, OptionCategory } from '../../../models/machine.interface';
+import { MachineOption, OptionCategory, CategoryConfig } from '../../../models/machine.interface';
 import { PriceCalculationService } from '../../../services/price-calculation/price-calculation.service';
 
 @Component({
@@ -14,9 +14,10 @@ export class OptionSectionComponent {
 
   @Input() title: string = '';
   @Input() options: MachineOption[] = [];
-  @Input() selectedOptionNames: Set<string> = new Set();
+  @Input() selectedOptionNames: Set<string> | Map<string, number> = new Set();
   @Input() selectedAditionalQuantities: Map<string, number> = new Map();
   @Input() category: OptionCategory = 'aditional';
+  @Input() categoryConfig: CategoryConfig = { category: 'aditional', hasQuantity: false, hasSelectAll: true };
 
   @Output() optionToggled = new EventEmitter<{ category: OptionCategory, optionName: string }>();
   @Output() allToggled = new EventEmitter<{ category: OptionCategory, event: Event }>();
@@ -50,7 +51,12 @@ export class OptionSectionComponent {
    * Verifica si todas las opciones están seleccionadas.
    */
   get isAllSelected(): boolean {
-    return this.selectedOptionNames.size === this.options.length;
+    if (this.selectedOptionNames instanceof Set) {
+      return this.selectedOptionNames.size === this.options.length;
+    } else {
+      // Para Map, verificar si todas las opciones tienen cantidad > 0
+      return this.options.every(option => (this.selectedOptionNames as Map<string, number>).get(option.name)! > 0);
+    }
   }
 
   /**
