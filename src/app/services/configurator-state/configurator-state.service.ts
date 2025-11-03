@@ -16,11 +16,11 @@ export class ConfiguratorStateService {
   isLoadingMachine = signal<boolean>(false);
 
   selectedOptions = signal<{
-    aditional: Set<string>;
+    aditional: Map<string, number>;
     optional: Set<string>;
     services: Set<string>;
   }>({
-    aditional: new Set(),
+    aditional: new Map(),
     optional: new Set(),
     services: new Set()
   });
@@ -94,6 +94,13 @@ export class ConfiguratorStateService {
     return this.priceCalculationService.calculateTotalUSD(machine, this.selectedOptions());
   });
 
+  /**
+   * Obtiene la cantidad seleccionada para una opción adicional.
+   */
+  getAditionalQuantity(optionName: string): number {
+    return this.selectedOptions().aditional.get(optionName) || 0;
+  }
+
   constructor(
     private configuratorService: ConfiguratorService,
     private priceCalculationService: PriceCalculationService
@@ -166,7 +173,7 @@ export class ConfiguratorStateService {
     this.machineResult.set(null);
     this.isLoadingMachine.set(false);
     this.selectedOptions.set({
-      aditional: new Set(),
+      aditional: new Map(),
       optional: new Set(),
       services: new Set()
     });
@@ -177,19 +184,65 @@ export class ConfiguratorStateService {
    */
   toggleOption(category: 'aditional' | 'optional' | 'services', optionName: string) {
     this.selectedOptions.update(current => {
-      // Crea un nuevo Set basado en el Set anterior para la categoría
-      const newSet = new Set(current[category]);
-
-      if (newSet.has(optionName)) {
-        newSet.delete(optionName);
+      if (category === 'aditional') {
+        // Para adicionales, manejamos cantidades
+        const newMap = new Map(current.aditional);
+        const currentQty = newMap.get(optionName) || 0;
+        if (currentQty > 0) {
+          newMap.delete(optionName);
+        } else {
+          newMap.set(optionName, 1);
+        }
+        return {
+          ...current,
+          aditional: newMap
+        };
       } else {
-        newSet.add(optionName);
+        // Para opcionales y servicios, comportamiento anterior
+        const newSet = new Set(current[category]);
+        if (newSet.has(optionName)) {
+          newSet.delete(optionName);
+        } else {
+          newSet.add(optionName);
+        }
+        return {
+          ...current,
+          [category]: newSet
+        };
       }
+    });
+  }
 
-      // Devuelve un objeto de estado completamente nuevo
+  /**
+   * Incrementa la cantidad de una opción adicional.
+   */
+  incrementAditional(optionName: string) {
+    this.selectedOptions.update(current => {
+      const newMap = new Map(current.aditional);
+      const currentQty = newMap.get(optionName) || 0;
+      newMap.set(optionName, currentQty + 1);
       return {
         ...current,
-        [category]: newSet
+        aditional: newMap
+      };
+    });
+  }
+
+  /**
+   * Decrementa la cantidad de una opción adicional.
+   */
+  decrementAditional(optionName: string) {
+    this.selectedOptions.update(current => {
+      const newMap = new Map(current.aditional);
+      const currentQty = newMap.get(optionName) || 0;
+      if (currentQty > 1) {
+        newMap.set(optionName, currentQty - 1);
+      } else {
+        newMap.delete(optionName);
+      }
+      return {
+        ...current,
+        aditional: newMap
       };
     });
   }
@@ -210,13 +263,16 @@ export class ConfiguratorStateService {
     const allNames = machine[categoryKey].map(item => item.name);
 
     this.selectedOptions.update(current => {
-      const newSet = isChecked ? new Set(allNames) : new Set();
-
-      // Devuelve un objeto de estado completamente nuevo
-      return {
-        ...current,
-        [category]: newSet
-      };
+      if (category === 'aditional') {
+        // Para adicionales, no hay "seleccionar todo" con cantidades
+        return current;
+      } else {
+        const newSet = isChecked ? new Set(allNames) : new Set();
+        return {
+          ...current,
+          [category]: newSet
+        };
+      }
     });
   }
 

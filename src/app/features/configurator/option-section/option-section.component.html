@@ -1,33 +1,66 @@
 <div class="bg-white rounded-lg shadow border border-gray-200">
   <header class="p-4 border-b border-gray-200 flex justify-between items-center">
     <h4 class="text-xl font-semibold text-gray-800">{{ title }}</h4>
-    <label class="flex items-center text-sm font-medium text-gray-700">
-      <input type="checkbox"
-        class="form-checkbox h-4 w-4 rounded text-blue-600 mr-2"
-        [checked]="isAllSelected"
-        (change)="onAllChange($event)"
-      >
-      Seleccionar todo
-    </label>
+    @if (category !== 'aditional') {
+      <label class="flex items-center text-sm font-medium text-gray-700">
+        <input type="checkbox"
+          class="form-checkbox h-4 w-4 rounded text-blue-600 mr-2"
+          [checked]="isAllSelected"
+          (change)="onAllChange($event)"
+        >
+        Seleccionar todo
+      </label>
+    }
   </header>
   <div class="divide-y divide-gray-100">
     @for (item of options; track item.name) {
-      <label class="flex items-start gap-4 p-4 hover:bg-gray-50 cursor-pointer">
-        <input
-          type="checkbox"
-          class="form-checkbox h-5 w-5 rounded text-blue-600 mt-1 flex-shrink-0"
-          [checked]="selectedOptionNames.has(item.name)"
-          (change)="onOptionChange(item.name)"
-        >
-        <div class="flex-grow">
-          <span class="font-medium text-gray-800">{{ item.name }}</span>
-          <p class="text-sm text-gray-600">{{ item.description }}</p>
+      @if (category === 'aditional') {
+        <div class="flex items-start gap-4 p-4 hover:bg-gray-50">
+          <div class="flex-grow">
+            <span class="font-medium text-gray-800">{{ item.name }}</span>
+            <p class="text-sm text-gray-600">{{ item.description }}</p>
+          </div>
+          <div class="flex items-center gap-2 flex-shrink-0">
+            <button
+              type="button"
+              class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center text-gray-700 font-medium"
+              (click)="onDecrement(item.name)"
+              [disabled]="getAditionalQuantity(item.name) === 0"
+            >
+              -
+            </button>
+            <span class="w-8 text-center font-medium">{{ getAditionalQuantity(item.name) }}</span>
+            <button
+              type="button"
+              class="w-8 h-8 rounded-full bg-blue-600 hover:bg-blue-700 flex items-center justify-center text-white font-medium"
+              (click)="onIncrement(item.name)"
+            >
+              +
+            </button>
+          </div>
+          <div class="text-right flex-shrink-0 w-32">
+            <span class="text-sm font-semibold text-gray-900">+ {{ formatPrice(item.price_cop, 'COP') }}</span>
+            <span class="block text-xs text-gray-500">+ {{ formatPrice(item.price_usd, 'USD') }}</span>
+          </div>
         </div>
-        <div class="text-right flex-shrink-0 w-32">
-          <span class="text-sm font-semibold text-gray-900">+ {{ formatPrice(item.price_cop, 'COP') }}</span>
-          <span class="block text-xs text-gray-500">+ {{ formatPrice(item.price_usd, 'USD') }}</span>
-        </div>
-      </label>
+      } @else {
+        <label class="flex items-start gap-4 p-4 hover:bg-gray-50 cursor-pointer">
+          <input
+            type="checkbox"
+            class="form-checkbox h-5 w-5 rounded text-blue-600 mt-1 flex-shrink-0"
+            [checked]="selectedOptionNames.has(item.name)"
+            (change)="onOptionChange(item.name)"
+          >
+          <div class="flex-grow">
+            <span class="font-medium text-gray-800">{{ item.name }}</span>
+            <p class="text-sm text-gray-600">{{ item.description }}</p>
+          </div>
+          <div class="text-right flex-shrink-0 w-32">
+            <span class="text-sm font-semibold text-gray-900">+ {{ formatPrice(item.price_cop, 'COP') }}</span>
+            <span class="block text-xs text-gray-500">+ {{ formatPrice(item.price_usd, 'USD') }}</span>
+          </div>
+        </label>
+      }
     }
   </div>
 </div>

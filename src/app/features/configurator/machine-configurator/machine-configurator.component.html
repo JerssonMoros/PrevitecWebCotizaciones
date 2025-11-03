@@ -55,10 +55,10 @@
             <app-option-section
               title="Equipamiento Adicional"
               [options]="machine.aditional_equipment"
-              [selectedOptionNames]="selectedOptions().aditional"
+              [selectedAditionalQuantities]="selectedOptions().aditional"
               category="aditional"
-              (optionToggled)="toggleOption($event.category, $event.optionName)"
-              (allToggled)="toggleAll($event.category, $event.event)">
+              (incrementAditional)="incrementAditional($event)"
+              (decrementAditional)="decrementAditional($event)">
             </app-option-section>
           }
 

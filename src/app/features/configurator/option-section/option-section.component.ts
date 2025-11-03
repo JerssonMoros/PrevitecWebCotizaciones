@@ -15,10 +15,13 @@ export class OptionSectionComponent {
   @Input() title: string = '';
   @Input() options: MachineOption[] = [];
   @Input() selectedOptionNames: Set<string> = new Set();
+  @Input() selectedAditionalQuantities: Map<string, number> = new Map();
   @Input() category: OptionCategory = 'aditional';
 
   @Output() optionToggled = new EventEmitter<{ category: OptionCategory, optionName: string }>();
   @Output() allToggled = new EventEmitter<{ category: OptionCategory, event: Event }>();
+  @Output() incrementAditional = new EventEmitter<string>();
+  @Output() decrementAditional = new EventEmitter<string>();
 
   private priceService = inject(PriceCalculationService);
 
@@ -48,5 +51,26 @@ export class OptionSectionComponent {
    */
   get isAllSelected(): boolean {
     return this.selectedOptionNames.size === this.options.length;
+  }
+
+  /**
+   * Obtiene la cantidad seleccionada para una opción adicional.
+   */
+  getAditionalQuantity(optionName: string): number {
+    return this.selectedAditionalQuantities.get(optionName) || 0;
+  }
+
+  /**
+   * Maneja el incremento de cantidad para adicionales.
+   */
+  onIncrement(optionName: string): void {
+    this.incrementAditional.emit(optionName);
+  }
+
+  /**
+   * Maneja el decremento de cantidad para adicionales.
+   */
+  onDecrement(optionName: string): void {
+    this.decrementAditional.emit(optionName);
   }
 }

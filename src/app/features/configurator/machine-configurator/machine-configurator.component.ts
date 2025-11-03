@@ -56,6 +56,20 @@ export class MachineConfiguratorComponent {
   }
 
   /**
+   * Incrementa la cantidad de una opción adicional.
+   */
+  incrementAditional(optionName: string): void {
+    this.stateService.incrementAditional(optionName);
+  }
+
+  /**
+   * Decrementa la cantidad de una opción adicional.
+   */
+  decrementAditional(optionName: string): void {
+    this.stateService.decrementAditional(optionName);
+  }
+
+  /**
    * Formatea un precio como moneda.
    */
   formatPrice(price: number, currency: 'COP' | 'USD'): string {
