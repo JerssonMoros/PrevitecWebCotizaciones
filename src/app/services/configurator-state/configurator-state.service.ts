@@ -188,6 +188,13 @@ export class ConfiguratorStateService {
       newPath.push(option);
       return newPath;
     });
+
+    // Reset selected options when path changes to avoid showing selections from previous flows
+    this.selectedOptions.set({
+      aditional: new Map(),
+      optional: new Set(),
+      services: new Set()
+    });
   }
 
   /**
