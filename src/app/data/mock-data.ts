@@ -23,7 +23,8 @@ export const MOCK_MACHINES_CONSOLIDATED = [
                     "system": "Multirango", 
                     "technology": [
                       "De engranajes", 
-                      "Peristáltica \"S\" / \"M\""
+                      "Peristáltica \"S\"",
+                      "Peristáltica \"M\""
                     ]
                   }
                 ]
