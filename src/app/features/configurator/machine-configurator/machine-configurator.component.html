@@ -57,6 +57,7 @@
               [options]="machine.aditional_equipment"
               [selectedAditionalQuantities]="selectedOptions().aditional"
               [selectedOptionNames]="selectedOptions().aditional"
+              [category]="'aditional'"
               [categoryConfig]="getCategoryConfig('aditional')"
               (incrementAditional)="incrementAditional($event)"
               (decrementAditional)="decrementAditional($event)"
@@ -71,6 +72,7 @@
               title="Equipamiento Opcional"
               [options]="machine.optional_equipment"
               [selectedOptionNames]="selectedOptions().optional"
+              [category]="'optional'"
               [categoryConfig]="getCategoryConfig('optional')"
               (optionToggled)="toggleOption($event.category, $event.optionName)"
               (allToggled)="toggleAll($event.category, $event.event)">
@@ -83,6 +85,7 @@
               title="Servicios y Documentación"
               [options]="machine.services_documentation"
               [selectedOptionNames]="selectedOptions().services"
+              [category]="'services'"
               [categoryConfig]="getCategoryConfig('services')"
               (optionToggled)="toggleOption($event.category, $event.optionName)"
               (allToggled)="toggleAll($event.category, $event.event)">

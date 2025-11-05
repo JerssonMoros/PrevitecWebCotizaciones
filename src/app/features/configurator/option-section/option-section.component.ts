@@ -55,7 +55,7 @@ export class OptionSectionComponent {
       return this.selectedOptionNames.size === this.options.length;
     } else {
       // Para Map, verificar si todas las opciones tienen cantidad > 0
-      return this.options.every(option => (this.selectedOptionNames as Map<string, number>).get(option.name)! > 0);
+      return this.options.every(option => (this.selectedOptionNames as Map<string, number>).has(option.name) && (this.selectedOptionNames as Map<string, number>).get(option.name)! > 0);
     }
   }
 

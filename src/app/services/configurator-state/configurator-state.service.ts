@@ -289,8 +289,21 @@ export class ConfiguratorStateService {
 
     this.selectedOptions.update(current => {
       if (category === 'aditional') {
-        // Para adicionales, no hay "seleccionar todo" con cantidades
-        return current;
+        // Para adicionales, seleccionar todo establece cantidad 1 para todos
+        const newMap = new Map(current.aditional);
+        if (isChecked) {
+          allNames.forEach(name => {
+            if (!newMap.has(name)) {
+              newMap.set(name, 1);
+            }
+          });
+        } else {
+          allNames.forEach(name => newMap.delete(name));
+        }
+        return {
+          ...current,
+          aditional: newMap
+        };
       } else {
         const newSet = isChecked ? new Set(allNames) : new Set();
         return {

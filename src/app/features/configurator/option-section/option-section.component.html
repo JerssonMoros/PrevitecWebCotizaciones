@@ -1,7 +1,7 @@
 <div class="bg-white rounded-lg shadow border border-gray-200">
   <header class="p-4 border-b border-gray-200 flex justify-between items-center">
     <h4 class="text-xl font-semibold text-gray-800">{{ title }}</h4>
-    @if (categoryConfig.hasSelectAll) {
+    @if (categoryConfig.hasSelectAll && !categoryConfig.hasQuantity) {
       <label class="flex items-center text-sm font-medium text-gray-700">
         <input type="checkbox"
           class="form-checkbox h-4 w-4 rounded text-blue-600 mr-2"
