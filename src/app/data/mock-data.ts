@@ -93,7 +93,14 @@ export const MOCK_MACHINES_CONSOLIDATED = [
                       "Inyectables", 
                       "Oftálmicos"
                     ]   
-                  }
+                  },
+                  {
+                    "type": "Polvos", 
+                    "application": [
+                      "Orales", 
+                      "Inyectables"
+                    ]   
+                  },
                 ]
               },
               {
